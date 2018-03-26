@@ -1,0 +1,52 @@
+group 'com.automaticamusements.app'
+version '1.0-SNAPSHOT'
+
+buildscript {
+
+    ext {
+        spring_plugin_version = '1.5.2.RELEASE'
+    }
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:$spring_plugin_version")
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'org.springframework.boot'
+apply plugin: 'war'
+
+
+war {
+    baseName = 'app'
+}
+
+sourceCompatibility = 1.7
+
+repositories {
+    mavenCentral()
+    maven { url "http://repo.spring.io/libs-snapshot" }
+}
+
+dependencies {
+
+    //Required for Hibernate + JPA
+    compile 'org.springframework.boot:spring-boot-starter-data-rest'
+    compile 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    //Required for spring boot security
+    compile 'org.springframework.boot:spring-boot-starter-security'
+
+    testCompile group: 'junit', name: 'junit', version: '4.11'
+
+    //Must Required for Database Connection
+    compile 'com.h2database:h2'
+    compile "postgresql:postgresql:8.2-504.jdbc3"
+
+    //Required For Tomcat Server
+    compile("org.springframework.boot:spring-boot-starter-web")
+    //providedRuntime("org.springframework.boot:spring-boot-starter-tomcat")
+}
